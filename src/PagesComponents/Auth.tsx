@@ -65,7 +65,7 @@ const Auth = ({ type }: paramsType) => {
 						/>
 						<Button
 							onClick={handleBtnClick}
-							colorScheme='teal'
+							colorScheme={(type === 'login' ? 'teal': 'yellow')}
 							isDisabled={!(!!email && !!password)}
 						>
 							{type === 'login' ? 'Sign in' : 'Sign up'}
