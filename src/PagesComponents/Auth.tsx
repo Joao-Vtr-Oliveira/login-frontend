@@ -27,11 +27,8 @@ const Auth = ({ type }: paramsType) => {
 		if (!emailTester(email)) return toast(toastHelper('email'));
 		if (!passwordTester(password)) return toast(toastHelper('password'));
 		try {
-			const data =
-				type === 'login'
-					? await request({ requestType: 'login', email, password })
-					: await request({ requestType: 'register', email, password });
-			if (data.status === 'ok') return toast(toastHelper('loginSuccess'));
+			const data = type === 'login' ? await request({ requestType: 'login', email, password }) : await request({ requestType: 'register', email, password });
+			if (data.status === 'ok') return type === 'login' ? toast(toastHelper('loginSuccess')) : toast(toastHelper('registerSuccess'));
 			type === 'login' ? toast(toastHelper('404')) : toast(toastHelper('409'));
 			console.log(data);
 		} catch (error) {
