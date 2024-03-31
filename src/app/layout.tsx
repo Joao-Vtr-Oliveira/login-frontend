@@ -6,8 +6,8 @@ import { Providers } from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-	title: 'Login',
-	description: 'Login Page',
+	title: 'Home',
+	description: 'Home Page',
 };
 
 export default function RootLayout({
@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang='en'>
-			<body className={inter.className}>
+			<body>
 				<Providers>{children}</Providers>
 			</body>
 		</html>
