@@ -1,5 +1,6 @@
 'use client';
 
+import { login, ping } from '@/requests/script';
 import { Button, Card, CardBody, Flex, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 
@@ -13,8 +14,11 @@ const SignIn = () => {
 	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>
 		setPassword(e.target.value);
 
-	const handleSignIn = () => {
+	const handleSignIn = async () => {
+		if(email === '' || password === '') return alert('Please, fill all the camps');
 		console.log('SignIn');
+		const data = await login({email, password});
+		console.log(data?.status);
 	};
 
 	return (
