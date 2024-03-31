@@ -1,6 +1,6 @@
 'use client';
 
-import { login } from '@/requests/script';
+import { request } from '@/requests/script';
 import { emailTester, passwordTester } from '@/utils/regexTester';
 import toastHelper from '@/utils/toastHelper';
 import {
@@ -13,21 +13,26 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-const SignIn = () => {
+type paramsType = { type: 'login' | 'register' };
+
+const Auth = ({ type }: paramsType) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 
 	const toast = useToast();
 
-	const handleSignIn = async () => {
-		if (email === '' || password === '') return alert('Please, fill all the camps');
+	const handleBtnClick = async () => {
+		if (email === '' || password === '')
+			return alert('Please, fill all the camps');
 		if (!emailTester(email)) return toast(toastHelper('email'));
 		if (!passwordTester(password)) return toast(toastHelper('password'));
-		
 		try {
-			const data = await login({ email, password });
-			if (data.status === 'ok') return toast(toastHelper('success'));
-			toast(toastHelper('404'));
+			const data =
+				type === 'login'
+					? await request({ requestType: 'login', email, password })
+					: await request({ requestType: 'register', email, password });
+			if (data.status === 'ok') return toast(toastHelper('loginSuccess'));
+			type === 'login' ? toast(toastHelper('404')) : toast(toastHelper('409'));
 			console.log(data);
 		} catch (error) {
 			console.log('fudeu');
@@ -59,11 +64,11 @@ const SignIn = () => {
 							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<Button
-							onClick={handleSignIn}
+							onClick={handleBtnClick}
 							colorScheme='teal'
 							isDisabled={!(!!email && !!password)}
 						>
-							Sign In
+							{type === 'login' ? 'Sign in' : 'Sign up'}
 						</Button>
 					</Flex>
 				</CardBody>
@@ -72,4 +77,4 @@ const SignIn = () => {
 	);
 };
 
-export default SignIn;
+export default Auth;

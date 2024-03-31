@@ -1,4 +1,4 @@
-import SignIn from '@/PagesComponents/SignIn';
+import Auth from '@/PagesComponents/Auth';
 import { Box } from '@chakra-ui/react';
 import { Metadata } from 'next';
 
@@ -16,7 +16,7 @@ const SignInPage = () => {
 			justifyContent='center'
 			alignItems='center'
 		>
-			<SignIn />
+			<Auth type='login' />
 		</Box>
 	);
 };

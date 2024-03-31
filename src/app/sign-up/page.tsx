@@ -1,4 +1,4 @@
-import SignUp from '@/PagesComponents/SignUp';
+import Auth from '@/PagesComponents/Auth';
 import { Box } from '@chakra-ui/react';
 import { Metadata } from 'next';
 
@@ -16,7 +16,7 @@ const SignUpPage = () => {
 			justifyContent='center'
 			alignItems='center'
 		>
-			<SignUp />
+			<Auth type='register' />
 		</Box>
 	);
 };
