@@ -36,7 +36,7 @@ const toastHelper = (info: info): toastType => {
       break;
     case 'registerSuccess':
       finalToast.title = 'Register success';
-      finalToast.description = 'OK!';
+      finalToast.description = 'New user created!';
       finalToast.status = 'success';
       finalToast.duration = 3000;
       break;
