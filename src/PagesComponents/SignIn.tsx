@@ -2,6 +2,7 @@
 
 import { login } from '@/requests/script';
 import { emailTester, passwordTester } from '@/utils/regexTester';
+import toastHelper from '@/utils/toastHelper';
 import {
 	Button,
 	Card,
@@ -18,68 +19,19 @@ const SignIn = () => {
 
 	const toast = useToast();
 
-	const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setEmail(e.target.value);
-
-	const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-		setPassword(e.target.value);
-
 	const handleSignIn = async () => {
-		if (email === '' || password === '')
-			return alert('Please, fill all the camps');
-		let errorToast;
-		let infoToast;
-		if (!emailTester(email)) {
-			return (errorToast = toast({
-				title: 'Invalid Email',
-				description: 'Please, write a valid email',
-				status: 'warning',
-				duration: 5000,
-				isClosable: true,
-			}));
-		}
-		if (!passwordTester(password)) {
-			return (errorToast = toast({
-				title: 'Invalid password',
-				description:
-					'The password must have: 8 characters, one lowercase letter, one uppercase letter and one digit',
-				status: 'warning',
-				duration: 5000,
-				isClosable: true,
-			}));
-		}
-		console.log('SignIn');
+		if (email === '' || password === '') return alert('Please, fill all the camps');
+		if (!emailTester(email)) return toast(toastHelper('email'));
+		if (!passwordTester(password)) return toast(toastHelper('password'));
+		
 		try {
 			const data = await login({ email, password });
-			if (data.status === 'ok') {
-				return toast({
-					title: 'Login success',
-					description: 'OK!',
-					status: 'success',
-					duration: 3000,
-					isClosable: true,
-				});
-			}
-			toast({
-				title: 'User not found',
-				description: 'please, check the email and password',
-				status: 'error',
-				duration: 3000,
-				isClosable: true,
-			});
+			if (data.status === 'ok') return toast(toastHelper('success'));
+			toast(toastHelper('404'));
 			console.log(data);
 		} catch (error) {
 			console.log('fudeu');
-			if (errorToast) {
-				toast.close(errorToast);
-			}
-			toast({
-				title: 'Error',
-				description: 'An error have ocurred!',
-				status: 'error',
-				duration: 5000,
-				isClosable: true,
-			});
+			toast(toastHelper('error'));
 		}
 	};
 
@@ -97,14 +49,14 @@ const SignIn = () => {
 							placeholder='example@example.com'
 							type='email'
 							required
-							onChange={handleEmailChange}
+							onChange={(e) => setEmail(e.target.value)}
 						/>
 						<Input
 							value={password}
 							placeholder='Example1'
 							required
-							onChange={handlePasswordChange}
 							type='password'
+							onChange={(e) => setPassword(e.target.value)}
 						/>
 						<Button
 							onClick={handleSignIn}
