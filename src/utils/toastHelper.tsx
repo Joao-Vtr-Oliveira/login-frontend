@@ -1,4 +1,4 @@
-type info = 'email' | 'password' | 'loginSuccess' | 'registerSuccess' | 'error' | '404' | '409';
+type info = 'email' | 'password' | 'loginSuccess' | 'registerSuccess' | 'error' | '404' | '409' | 'emptyFields';
 
 type toastType = {
   title: string;
@@ -51,10 +51,16 @@ const toastHelper = (info: info): toastType => {
       finalToast.status = 'error';
       finalToast.duration = 3000;
       break;
+    case 'emptyFields':
+      finalToast.title = 'Empty fields';
+      finalToast.description = 'Please, fill in all fields';
+      finalToast.status = 'warning';
+      break;
     default:
       finalToast.title = 'Error!';
       finalToast.description = 'An error have ocurred';
       finalToast.status = 'error';
+      break;
   }
 
 	return finalToast;
