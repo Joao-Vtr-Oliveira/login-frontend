@@ -32,10 +32,13 @@ const Auth = ({ type }: paramsType) => {
 			type === 'login' ? toast(toastHelper('404')) : toast(toastHelper('409'));
 			console.log(data);
 		} catch (error) {
-			console.log('fudeu');
 			toast(toastHelper('error'));
 		}
 	};
+
+	const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.key === 'Enter') handleBtnClick();
+	}
 
 	return (
 		<Flex align='center' justifyContent='center' height='full' width='full'>
@@ -52,6 +55,7 @@ const Auth = ({ type }: paramsType) => {
 							type='email'
 							required
 							onChange={(e) => setEmail(e.target.value)}
+							onKeyDown={handleKeyPress}
 						/>
 						<Input
 							value={password}
@@ -59,6 +63,7 @@ const Auth = ({ type }: paramsType) => {
 							required
 							type='password'
 							onChange={(e) => setPassword(e.target.value)}
+							onKeyDown={handleKeyPress}
 						/>
 						<Button
 							onClick={handleBtnClick}
