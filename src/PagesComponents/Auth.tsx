@@ -23,7 +23,7 @@ const Auth = ({ type }: paramsType) => {
 
 	const handleBtnClick = async () => {
 		if (email === '' || password === '')
-			return alert('Please, fill all the camps');
+			return toast(toastHelper('emptyFields'));
 		if (!emailTester(email)) return toast(toastHelper('email'));
 		if (!passwordTester(password)) return toast(toastHelper('password'));
 		try {
